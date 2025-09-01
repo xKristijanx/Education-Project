@@ -2,18 +2,19 @@
 * {
     padding: 0;
     margin: 0;
+    box-sizing: border-box;
     font-family: 'Montserrat', sans-serif; 
 }
 
 body {
-    background-color: 	#f5f5f5;
+    background: linear-gradient(to right, #f9c4c0 0%,  #f5f5f5 10%, #f5f5f5 90%, #c7eafc 100% );     
 }
 
 .nav {
     position: fixed;
     width: 100%;
     left: 0;
-    background-color: 	#87CEFA;
+    background: linear-gradient(to right, #ff6b6b 0%, #4da6ff 100%);
     z-index: 999;
     padding: 10px 0;
 }
@@ -43,8 +44,8 @@ body {
 .header-logo {
     margin: auto;
     display: block;
-    width: 300px;
-    height: 300px;
+    width: auto;
+    height: 350px;
 }
 
 .header-text {
@@ -76,12 +77,27 @@ body {
 .header2 {
     text-align: center;
     font-size: 30px;
+    margin: 100px;
+    color: black;
+}
+
+.structure1 {
+    width: 85%;
+    margin: auto;
 }
 
 .marketing-block1 {
-    margin-left: 7.5%;
-    width: 60%;
+    width: 70%;
 }
+
+.align-left {
+  margin-left: 0;
+}
+
+.align-right {
+  margin-left: auto;
+}
+
 
 .article-pharagraph {
     font-size: 20px;
@@ -104,11 +120,6 @@ body {
     background-color: white;
     box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.1);
 }
-.marketing-block2 {
-    width: 60%;
-    margin-left: auto;
-    margin-right: 7.5%;
-}
 
 .marketing2 {
     display: flex;
@@ -121,12 +132,73 @@ body {
     box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.1);
 }
 
+.logo-brands {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 60%;
+    height: auto;
+    margin: 100px auto;
+    border: 1px solid #d3d3d3;
+    border-radius: 40px;
+    padding: 50px;
+    gap: 50px 25px;
+    background-color: white;
+}
+
+.logo-brand {
+    border: 1px solid #d3d3d3;
+    width: 150px;
+    height: 80px;
+    border-radius: 10%;
+}
+
+.logo-brand:hover {
+    box-shadow: 0px 0px 5px #4da6ff;
+    opacity: 60%;
+}
+
+
 .marketing-block3 {
     margin-top: 100px;
     text-align: center;
     line-height: 3;
     font-size: 20px;
 }
+
+.window-scroller {
+    overflow: hidden;
+    width: 70%;
+    margin: auto;
+    padding: 20px;
+    border-top: 1px solid #d3d3d3;
+    border-bottom: 1px solid #d3d3d3;
+    box-shadow: 0px 2px 3px -3px rgba(0, 0, 0, 0.2);
+}
+
+.scroll-container {
+    display: flex;
+    height: auto;
+    animation: scroll 5s linear infinite;
+}
+
+@keyframes scroll {
+    from { transform: translateX(0);}
+    to { transform: translateX(-50%);}
+}
+
+.review {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-top: 1px solid #d3d3d3;
+    border-bottom: 1px solid #d3d3d3;
+    flex-shrink: 0;
+    flex-basis: 25%;
+    height: 40px;
+    border: 1px solid #d3d3d3;
+}
+
 
 /* Kontakt.html css*/
 
@@ -143,16 +215,43 @@ body {
     position: relative;
     display: flex;
     flex-direction: column;
-    height: 500px;
-    border: black solid 1px;
+    height: auto;
+    border: 1px solid #00000025;
     border-radius: 10px;
-    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.1);
-    padding: 20px 10px;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1);
+    padding: 30px 30px;
     gap: 20px;
+    background-color: white;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 .kontakt-style {
-    padding: 5px;
-    width: 40%;
+    padding: 7px;
+    width: 47.5%;
     border-radius: 5px;
+    border: 1px solid #00000025;
+    font-weight: 500;
+}
+
+textarea {
+    resize: none;
+    width: 95%;
+    border: 1px solid #00000025;
+    border-radius: 10px;
+    padding: 5px;
+}
+
+.kontakt-style:focus, textarea:focus {
+    outline: none;
+    box-shadow: 0 0 0 1px #666;
+}
+
+.submit-button {
+    width: 13%;
+    padding: 8px 10px;
+    border: 1px solid #666;
+    border-radius: 10px;
+    font-weight: 600;
+    color: white;
+    background-color: #87CEFA;
 }
