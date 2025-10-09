@@ -8,6 +8,9 @@
     <meta name="author" content="Izradio: Kristijan Vugrin | Vlasnik: Valentino Ježovita / LV Servis j.d.o.o." />
     <meta name="keywords" content="klima uređaji, montaža klime, servis klime, LV Servis, Novi Marof" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Oswald:wght@200..700&family=Roboto+Slab:wght@100..900&display=swap" rel="stylesheet">
     <link rel="icon" href="images/favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="css/style.css" />
     <title>LV Servis j.d.o.o. | Ugradnja, servis i popravak klima uređaja. </title>
@@ -27,23 +30,43 @@
     <div class="header-space"></div>
     <main class="kontakt">
       <div>
-        <h1>Kontaktirajte nas</h1>
+        <h1 class="kontakt-header">Kontaktirajte nas</h1>
         <form class=contact-form action="" method="" name="">
-           <label for="name">Ime I prezime:</label>
-           <input class="kontakt-style" type="text" id="name" name="name" placeholder="Ime I prezime" required />
-            
-           <label for="email">Email adresa:</label>
-           <input class="kontakt-style" type="email" id="email" name="email" placeholder="Email" required />
+          
+            <label for="name">Ime I prezime:</label>
+            <input class="kontakt-style1" type="text" id="name" name="name" placeholder="Ime I prezime" required />
+             <div class="kontakt-row1">
+                <div class="kontakt-column1">  
+                    <label class="label-space" for="email">Email adresa:</label>
+                    <input class="kontakt-style2 kontakt-width" type="email" id="email" name="email" placeholder="Email" required />
+                </div> 
+                <div class="kontakt-column1">  
+                    <label class="label-space" for="number">Broj mobitela</label>
+                    <input class="kontakt-style2 kontakt-width" type="number" id="number" name="number" placeholder="Broj Mobitela" required />
+                </div> 
+             </div>
+            <label for="message">Poruka</label>
+            <textarea id="message" name="message" rows="10" required></textarea>
 
-           <label for="message">Poruka</label>
-           <textarea id="message" name="message" rows="10" required></textarea>
-
-           <button class="submit-button" type="submit">POŠALJI</button>
+            <button class="submit-button" type="submit">POŠALJI</button>
         </form>
        </div>
     </main>
     <footer>
-         <p>&copy; 2025 LV Servis j.d.o.o. Sva prava pridržana.</p>
+          <div class="footer-contact footer-margin">
+            <p>Adresa:</p>
+            <p>Telefon:</p>
+            <p>Email</p>
+          </div>
+          <div class="footer-socials footer-margin">
+            <a href="https://www.facebook.com/?locale=hr_HR" target="_blank"><img class="media-fav" src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="Facebook" width="16" height="16"/>Facebook</a>
+            <a href="https://www.instagram.com/" target="_blank">  <img class="media-fav" src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram" width="16" height="16">Instagram</a>
+          </div>
+          <div class="footer-legal footer-margin">
+            <a href="terms" target="_blank"></a>
+            <a href="privacy" target="_blank"></a>
+            <p>&copy; 2025 LV Servis j.d.o.o. Sva prava pridržana.</p>
+          </div>
     </footer>
 </body>
 </html>
