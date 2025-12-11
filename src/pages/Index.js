@@ -23,12 +23,6 @@ function Index () {
         <MarketingBlocks />
         <LogoBrands />
         <Reviews />
-        <section>
-                <article className="marketing-block3">
-                <h3>Dostupnost diljem Hrvatske</h3>
-                <p>Rezervirajte montažu ili servis već danas!</p>
-                </article>
-        </section>
         </main>
         <Footer />
         </div>

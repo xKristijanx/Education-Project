@@ -18,23 +18,23 @@ header {
 
 .logo-wrapper {
     position: relative;
-    width: 35%;
-    height: 350px;
+    width: clamp(250px, 35%, 900px); 
     margin: 50px auto;
     border: 1px solid #cdcdcd;
     border-radius: 20px;
     overflow: hidden;
+    aspect-ratio: 16 / 9;          
 }
 
 .header-logo {
     width: 100%;
     height: 100%;
-    scale: 1.2;
     object-fit: cover;
     display: block;
 }
 
 .header-text {
+    position: relative;
     text-align: center;
     width: 60%;
     margin: auto;
@@ -44,7 +44,33 @@ header {
     color: #333333;
     border: 1px solid silver;
     border-radius: 20px;
+    padding: 10px;
+    background-color: white;
 }
+
+.header-text::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    padding: 3px;
+    border-radius: inherit;
+    background: linear-gradient(to right, #f9c4c0 0%,  #f5f5f5 8%, #f5f5f5 92%, #c7eafc 100% );
+    background-size: 300% 100%;
+    animation: headerBorderMove 6s linear infinite; 
+
+    -webkit-mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+            mask-composite: exclude;
+}
+
+@keyframes headerBorderMove {
+    0% {background-position: 0% 50%;}
+    100% { background-position: 200% 50%;}
+}
+
+
 
 .header-img-overflow {
     width: 85%;
@@ -148,7 +174,7 @@ header {
     position: relative;
     overflow: hidden;
     width: 85%;
-    height: 450px;
+    height: 550px;
     margin: auto;
 }
 
@@ -186,7 +212,7 @@ header {
     display: flex;
     overflow-x: scroll;
     scroll-behavior: smooth;
-    height: 450px;
+    height: 550px;
 }
 
 .carousel-scroll::-webkit-scrollbar {
@@ -203,10 +229,23 @@ header {
     flex-direction: column;
     align-items: flex-start;
     border: 1px solid #d3d3d3;
+    background-color: white;
     margin: auto 1%;
     flex: 0 0 23%;
-    height: 400px;
+    height: 500px;
     border-radius: 10px;
+    transition: all 0.3s ease-out;
+}
+
+.carousel-item:hover {
+    border-color: #ff6b6b;
+}
+
+.carousel-item .product-name {
+    align-self: center;
+    text-align: center;
+    font-weight: 500;
+    
 }
 
 .carousel-img {
@@ -215,10 +254,12 @@ header {
     width: 90%;
     margin: 10px auto;
     border-radius: 15px;
+    border: 1px solid #d3d3d3;
 }
 
 .carousel-info {
-    margin: 10px 20px;
+    margin: 5px 20px;
+    font-size: 16px;
 }
 
 .carousel-button {
@@ -335,9 +376,9 @@ header {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 50%;
+    width: 40%;
     height: auto;
-    margin: 100px auto;
+    margin: 60px auto;
     border: 1px solid #d3d3d3;
     border-radius: 40px;
     padding: 50px;
@@ -360,6 +401,15 @@ header {
     padding: 10px;
 }
 
+.brand-imgs {
+    width: 70px;
+    height: auto;
+    object-fit: contain;
+}
+
+.rev-box {
+    margin-bottom: 50px;
+}
 
 .window-scroller {
     overflow: hidden;
@@ -374,18 +424,19 @@ header {
 .scroll-container {
     display: flex;
     height: auto;
-    animation: scroll 20s linear infinite;
+    animation: scroll 40s linear infinite;
 }
 
 @keyframes scroll {
     from { transform: translateX(0);}
-    to { transform: translateX(-100%);} 
+    to { transform: translateX(-200%);} 
 }
 
 .review {
     display: flex;
     justify-content: center;
     align-items: center;
+    gap: 10px;
     border-top: 1px solid #d3d3d3;
     border-bottom: 1px solid #d3d3d3;
     flex-shrink: 0;
@@ -395,6 +446,17 @@ header {
     box-shadow: 0px 3px 3px -4px rgba(0, 0, 0, 0.2), 0px -3px 3px -4px rgba(0, 0, 0, 0.2);   
 }
 
+.rev-name {
+    margin-top: 2px;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.rev-stars {
+    color: #ff6b00;
+    font-size: 20px;
+    font-weight: bold;
+}
 
 /* Extra Large desktops (optional) */
 @media (max-width: 1400px) {
@@ -414,6 +476,10 @@ header {
         flex-basis: 33%;
         margin-right: 1%;
     }
+
+    .logo-brands {
+        width: 50%;
+    }
 }
 
 /* Desktop → Tablet Landscape */
@@ -421,7 +487,7 @@ header {
     .carousel-item {
         flex: 0 0 31%;
         margin: auto 1.16%;
-        height: 400px;
+        height: 450px;
         border-radius: 10px;
     }
 
@@ -438,6 +504,10 @@ header {
     .review {
         flex-basis: 49%;
         margin-right: 1%;
+    }
+
+    .logo-brands{
+        width: 70%;
     }
 }
 
@@ -542,7 +612,7 @@ header {
     .carousel-item {
         flex: 0 0 45%;
         margin: auto 2.5%;
-        height: 400px;
+        height: 450px;
         border-radius: 10px;
     }
 
@@ -605,7 +675,7 @@ header {
     .carousel-item {
         flex: 0 0 70%;
         margin: auto 15%;
-        height: 400px;
+        height: 450px;
         border-radius: 10px;
     }
 
@@ -624,6 +694,10 @@ header {
      .article-pharagraph {
         font-size: 16px;
     }
+
+    .logo-brands {
+        width: 80%;
+    }
 }
 
 @media (max-width: 470px ) {
@@ -631,7 +705,7 @@ header {
     .carousel-item {
         flex: 0 0 85%;
         margin: auto 7.5%;
-        height: 400px;
+        height: 450px;
         border-radius: 10px;
     }
 
@@ -672,7 +746,7 @@ header {
     .carousel-item {
         flex: 0 0 97%;
         margin: auto 1.5%;
-        height: 380px;
+        height: 430px;
         border-radius: 10px;
     }
 
@@ -797,6 +871,16 @@ textarea {
 
 /*O-nama css*/
 
+.page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.page main {
+    flex: 1;
+}
+
 .o-nama-cont {
     display: flex;
     flex-direction: column;
@@ -904,7 +988,7 @@ textarea {
     list-style: none;
 }
 
-.ad-us-box li a {
+.ad-us-box li a, .ad-us-box li button {
     display: block;
     text-decoration: none;
     list-style: none;
@@ -912,13 +996,18 @@ textarea {
     text-align: center;
     color: white;
     background: linear-gradient(to right, #ff6b6b 0%, #4da6ff 100%);
+    border: none;
     border-radius: 20px;
     padding: 5px;
-    transition: scale 0.2s ease;
+    transition: scale 0.2s ease;  
 }
 
-.ad-us-box li a:active {
+.ad-us-box li a:active, .ad-us-box li button:active  {
     scale: 0.9;
+}
+
+.ad-us-box li button {
+    font-size: 16px;
 }
 
 .ad-us-box-wrap {
@@ -964,6 +1053,81 @@ textarea {
     gap: 25px;
     height: 40%;
     margin-top: 20px;
+}
+
+.table-win {
+    background-color: #f8f8f8;
+    border: 1px solid #00000025;
+    box-shadow: 0 0 5px #ccc;
+    width: 80%;
+    padding: 2% 0px;
+    margin: 100px auto;
+    border-radius: 20px;
+    height: auto;
+}
+
+.hide-table {
+    display: none;
+}
+
+.product-table {
+    margin: auto;
+    width: 95%;
+    border-radius: 20px;
+    height: auto;
+    border-collapse: collapse;
+    background-color: white;
+    box-shadow: 0 0 5px #ccc;
+}
+
+.product-table tbody tr {
+    transition: background-color 0.3s ease;
+}
+
+.product-table th{
+    border-bottom: 1px solid #ddd;   
+    padding: 15px;
+}
+
+.product-table td {
+    border-bottom: 1px solid #ddd;   
+    padding: 8px 12px;
+}
+
+.product-table tbody tr:hover {
+    background-color: #00000025;
+}
+
+.product-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.product-table tbody tr:first-child td:last-child {
+  border-top: 1px solid #ddd;
+}
+
+.product-table button {
+    width: 80px;
+    height: 35px;
+    border-radius: 20px;
+    border: none;
+    background: linear-gradient(135deg, #ff9a9a, #ff6b6b);
+    color: white;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.product-table button:hover {
+    box-shadow: 0 0 10px #ff6b6b;
+    transform: translateY(-6px);
+} 
+
+.product-table button:active {
+    scale: 0.9;
+} 
+
+.product-table {
+    text-align: center;
 }
 
 /* Pass-change css */
@@ -1020,7 +1184,7 @@ textarea {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 30%;
+    width: 40%;
     margin: 50px auto;
     border: 1px solid #00000025;
     border-radius: 20px;
@@ -1031,6 +1195,7 @@ textarea {
 
 .product-add-form input, .product-add-form select {
     text-align: center;
+    font-weight: 500;
 }
 
 .product-add-form input:focus {
@@ -1040,8 +1205,8 @@ textarea {
 
 .product-field {
     width: 80%;
-    height: 35px;
-    border-radius: 20px;
+    height: 40px;
+    border-radius: 10px;
     border: 1px solid #00000025;
     padding: 5px;
 }
@@ -1073,6 +1238,251 @@ textarea {
 
 .product-btn:active {
     transform: scale(0.96);
+}
+
+@media (max-width: 1200px) {
+    .product-add-form {
+        width: 50%;
+    }
+}
+
+@media (max-width: 960px) {
+    .product-add-form {
+        width: 60%;
+    }
+}
+
+@media (max-width: 800px) {
+    .product-add-form {
+        width: 70%;
+    }
+}
+
+@media (max-width: 700px) {
+    .product-btn {
+        width: 40%;
+    }
+}
+
+@media (max-width: 700px) {
+    .product-btn {
+        width: 50%;
+    }
+}
+
+@media (max-width: 450px) {
+    .product-btn {
+        width: 60%;
+    }
+}
+
+/* Shop css */
+
+.brand-slider {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    margin: 100px auto;
+    border: 1px solid #00000025;
+    border-radius: 20px;
+    gap: 20px;
+    max-width: 900px;
+    padding: 25px;
+    background-color: #ffffff;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+}
+
+.brand-slider h2 {
+    text-align: center;
+    font-size: 1.6rem;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+}
+
+.brand-slider-logos {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 20px;  
+}
+
+.brand-logo-item {
+  flex: 1;                     
+  display: flex;
+  justify-content: center;     
+}
+
+.brand-logo-item img {
+  max-height: 45px;
+  width: auto;
+  object-fit: contain;
+  filter: grayscale(40%);
+  border: 1px solid #00000025;
+  border-radius: 10px;
+  padding: 4px 8px;
+  background-color: #fafafa;
+}
+
+
+.brand-slider-input {
+  width: calc(100% - 40px); 
+  margin: 10px auto 5px;
+  display: block;
+  appearance: none;
+  height: 8px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #667eea, #764ba2);
+  outline: none;
+}
+
+/* Chrome ball css*/
+
+.brand-slider-input::-webkit-slider-thumb {
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #764ba2;
+  border: 2px solid #764ba2;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+.brand-slider-input::-webkit-slider-thumb:hover {
+  transform: scale(1.08);
+}
+
+/* Firefox ball css */
+
+.brand-slider-input::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #764ba2;
+  border: 2px solid #764ba2;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+.brand-slider-input::-moz-range-thumb:hover {
+  transform: scale(1.08);
+}
+
+.brand-slider-input::-moz-range-track {
+  height: 4px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #667eea, #764ba2);
+}
+
+.shop-block {
+  width: 80%;
+  max-width: 1100px;
+  margin: 40px auto 100px;
+  padding: 20px 20px 30px;
+  border: 1px solid #00000025;
+  border-radius: 20px;
+  background-color: #ffffff;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+}
+
+.shop-empty {
+  text-align: center;
+  padding: 20px 0;
+  color: #777;
+  font-size: 0.95rem;
+}
+
+.shop-wrapper {
+  width: 100%;
+  padding: 10px 10px 20px;
+}
+
+.shop-items {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+.shop-item {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 14px 16px;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.06);
+  border: 1px solid #00000010;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.shop-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.1);
+}
+
+.shop-item-img {
+  width: 100%;
+  height: 160px;
+  border-radius: 12px;
+  background: #f7f7f9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.shop-item-img img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+
+.shop-item-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.shop-item-title {
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+
+.shop-item-sub {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.shop-item-power {
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.shop-item-price {
+  margin-top: 6px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #2c7a7b;
+}
+
+/* Shop media 
+*/
+@media (max-width: 768px) {
+  .brand-slider,
+  .shop-block {
+    width: 90%;
+    padding: 20px;
+  }
+
+  .shop-item-img {
+    height: 140px;
+  }
 }
 
 

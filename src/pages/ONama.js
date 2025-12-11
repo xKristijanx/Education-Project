@@ -28,7 +28,7 @@ function ONama () {
     }, []);
 
     return (
-        <div>
+        <div className="page">
             <header><Nav /></header>
             <main>
                 <div className="o-nama-cont">

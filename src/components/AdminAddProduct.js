@@ -8,6 +8,7 @@ function AdminAddProduct () {
 
     const [brand, setBrand] = useState("");
     const [model, setModel] = useState("");
+    const [ime, setIme] = useState("");
     const [snaga, setSnaga] = useState("");
     const [tip, setTip] = useState("");
     const [boja, setBoja] = useState("");
@@ -23,7 +24,7 @@ function AdminAddProduct () {
         setError("");
         setSuccess("");
 
-        if (!brand || !model || !snaga || !tip || !cijena) {
+        if (!brand || !ime || !model || !snaga || !tip || !cijena) {
             setError("Molimo ispunite obavezna polja.");
             return;
         }
@@ -46,6 +47,7 @@ function AdminAddProduct () {
             const productData = {
                 brand,
                 model,
+                ime,
                 snaga_kW: Number(snaga),
                 tip,
                 boja,
@@ -61,6 +63,7 @@ function AdminAddProduct () {
 
               setBrand("");
               setModel("");
+              setIme("");
               setSnaga("");
               setTip("");
               setBoja("");
@@ -106,6 +109,9 @@ function AdminAddProduct () {
 
                 <label>Snaga (kW)</label>
                 <input className="product-field" name="snaga_kW" value={snaga} type="number" onChange={(e) => setSnaga(e.target.value)} placeholder="*" required />
+
+                <label>Ime</label>
+                <input className="product-field" name="ime" value={ime} onChange={(e) => setIme(e.target.value)} placeholder="*" required />
 
                 <label>Tip</label>
                 <input className="product-field" name="tip" value={tip} onChange={(e) => setTip(e.target.value)} placeholder="*" required />

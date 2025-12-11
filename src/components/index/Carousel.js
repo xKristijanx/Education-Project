@@ -1,10 +1,43 @@
 import { useRef, useState, useEffect } from "react";
 import Placeholder from "../../images/Placeholder.jpg"
+import { db } from "../../firebase";
+import { collection, getDocs } from "firebase/firestore";
 
 function Carousel () {
 
     const scrollRef = useRef(null);
     const [visibleItems, setVisibleItems] = useState (4);
+    const [ products, setProducts ] = useState([]);
+
+    function getRandomItems(array, count) {
+        if (array.length <= count) return array;
+
+        const shuffled = [...array].sort(() => Math.random() - 0.5);
+        return shuffled.slice(0, count);
+    }
+
+    useEffect (() => {
+        const fetchProducts = async () => {
+            try {
+                const productsRef = collection(db, "products");
+                const snapshot = await getDocs(productsRef);
+
+                const allProducts = snapshot.docs.map(doc => ({
+                    id: doc.id,
+                    ...doc.data()
+                }));
+
+                const randomEight = getRandomItems(allProducts, 8);
+                setProducts(randomEight);
+            }
+            catch(error){
+                console.error(`Doslo je do greske kod preuzimanja: ${error}`)
+            }
+        }
+        fetchProducts();
+    }, [])
+
+    console.log(products);
 
     useEffect (() => {
         const handleResize = () => {
@@ -65,6 +98,17 @@ function Carousel () {
         });
     };
 
+    function formatPrice(value) {
+        if (!value && value !==0 ) return "";
+
+        else {
+            return Number(value).toLocaleString("en-US", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2 
+            });
+        }
+    }
+
 
 
     return (
@@ -74,54 +118,16 @@ function Carousel () {
                 <button className="carousel-arrow arrow-margin-right" onClick={ScrollLeft}>&#10094;</button> 
                 <div className="carousel-window">
                     <div className="carousel-scroll" ref={scrollRef}>
-                        <article className="carousel-item">
-                            <img className="carousel-img" src={Placeholder}/>
-                            <p className="carousel-info">Description text</p>
-                            <p className="carousel-info">Data</p>
-                            <button className="carousel-button">Saznajte više</button>
-                        </article>
-                        <article className="carousel-item">
-                            <img className="carousel-img" src={Placeholder}/>
-                            <p className="carousel-info">Description text</p>
-                            <p className="carousel-info">Data</p>
-                            <button className="carousel-button">Saznajte više</button>
-                        </article>
-                        <article className="carousel-item">
-                            <img className="carousel-img" src={Placeholder}/>
-                            <p className="carousel-info">Description text</p>
-                            <p className="carousel-info">Data</p>
-                            <button className="carousel-button">Saznajte više</button>
-                        </article>
-                        <article className="carousel-item">
-                            <img className="carousel-img" src={Placeholder}/>
-                            <p className="carousel-info">Description text</p>
-                            <p className="carousel-info">Data</p>
-                            <button className="carousel-button">Saznajte više</button>
-                        </article>
-                        <article className="carousel-item">
-                            <img className="carousel-img" src={Placeholder}/>
-                            <p className="carousel-info">Description text</p>
-                            <p className="carousel-info">Data</p>
-                            <button className="carousel-button">Saznajte više</button>
-                        </article>
-                        <article className="carousel-item">
-                            <img className="carousel-img" src={Placeholder}/>
-                            <p className="carousel-info">Description text</p>
-                            <p className="carousel-info">Data</p>
-                            <button className="carousel-button">Saznajte više</button>
-                        </article>
-                        <article className="carousel-item">
-                            <img className="carousel-img" src={Placeholder}/>
-                            <p className="carousel-info">Description text</p>
-                            <p className="carousel-info">Data</p>
-                            <button className="carousel-button">Saznajte više</button>
-                        </article>
-                        <article className="carousel-item">
-                            <img className="carousel-img" src={Placeholder}/>
-                            <p className="carousel-info">Description text</p>
-                            <p className="carousel-info">Data</p>
-                            <button className="carousel-button">Saznajte više</button>
-                        </article>
+                        {products.map(product => (
+                            <article className="carousel-item" key={product.id}>
+                                <img className="carousel-img" src={product.slika || product.imageUrl || Placeholder} alt={`${product.brand || ""} ${product.model || ""}`} />
+                                <p className="carousel-info product-name">{product.ime}</p>
+                                <p className="carousel-info">Model: {product.brand}</p>
+                                <p className="carousel-info">Brand: {product.model}</p>
+                                <p className="carousel-info">Snaga: {product.snaga_kW} kW</p>
+                                <p className="carousel-info">Cijena: {formatPrice(product.cijena)} €</p>
+                            </article>
+                        ))}
                     </div>
                 </div>
                 <button className="carousel-arrow arrow-margin-left" onClick={ScrollRight}>&#10095;</button> 

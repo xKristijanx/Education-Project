@@ -1,20 +1,24 @@
 import { useEffect, useState } from "react";
+import Toshiba from "../../assets/Toshiba.png"
+import Fujitsu from "../../assets/Fujitsu.png"
+import Korel from "../../assets/Korel.png"
+import Midea from "../../assets/Midea.png"
+import QTherm from "../../assets/QTherm.png"
+import Samsung from "../../assets/Samsung.png"
 
 function LogoBrands () {
 
     const brands = [
-        "Toshiba",
-        "Samsung",
-        "Midea",
-        "Korel",
-        "Mitsubishi",
-        "Gree",
-        "Fujitsu",
-        "Hyundai",
-        "QTherm"
+        {name: "Toshiba", logo: Toshiba },
+        {name: "Fujitsu", logo: Fujitsu },
+        {name: "Korel", logo: Korel },
+        {name: "Midea", logo: Midea },
+        {name: "QTherm", logo: QTherm },
+        {name: "Samsung", logo: Samsung },
     ]
 
-    const [angle, setAngle] = useState(0);
+    const [ angle, setAngle ] = useState(0);
+    const [ radius, setRadius ] = useState(180);
 
     useEffect(() => {
         let frame;
@@ -29,7 +33,25 @@ function LogoBrands () {
         return () => cancelAnimationFrame(frame);
     }, []);
 
-    const radius = 180;
+    useEffect (() => {
+        function updateRadius() {
+            if (window.innerWidth < 700) {
+                setRadius(140);
+            }
+            else if ( window.innerWidth < 500) {
+                setRadius(100);
+            }
+            else {
+                setRadius(180);
+            }
+
+        }
+
+        updateRadius();
+
+        window.addEventListener("resize", updateRadius);
+        return () => window.removeEventListener("resize", updateRadius);
+    }, [])
 
     return (
         <section>
@@ -45,13 +67,12 @@ function LogoBrands () {
 
                         return ( 
                             <div 
-                                key={brand}
+                                key={brand.name}
                                 className="brand"
                                 style={{transform: `translate(-50%, -50%) translate(${x}px, ${y}px)`}}
                             >
                                 <div className="brand-inner">
-                                    {brand}
-                                    {<img src=""/>}
+                                    {<img className="brand-imgs" src={brand.logo} alt={brand.name}/>}
                                 </div>
                                 
                             </div>
