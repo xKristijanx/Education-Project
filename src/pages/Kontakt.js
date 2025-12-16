@@ -5,7 +5,6 @@ import Footer from "../components/Footer";
 function Kontakt () {
     return (
         <div>
-            <header><Nav /></header>
             <div className="header-space"></div>
             <main className="kontakt">
                 <div>
@@ -31,7 +30,6 @@ function Kontakt () {
                     </form>
                 </div>
             </main>
-            <Footer />
         </div>
     );
 }

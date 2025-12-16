@@ -28,7 +28,6 @@ function Login () {
 
     return (
         <div>
-            <header><Nav /></header>
             <div className="login-form">
                 <h2>Prijavite se</h2>
             <form onSubmit={handleSubmit}>

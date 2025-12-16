@@ -12,7 +12,6 @@ import Footer from "../components/Footer";
 function Index () {
     return (
         <div>
-        <header><Nav /></header>
         <main>
         <div className="logo-wrapper">
              <img className="header-logo" src={Logo} alt="header-logo"/>
@@ -24,7 +23,6 @@ function Index () {
         <LogoBrands />
         <Reviews />
         </main>
-        <Footer />
         </div>
     );
 }

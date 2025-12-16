@@ -11,6 +11,7 @@ import AuthProvider  from "./services/AuthContext";
 import { useEffect } from 'react';
 import ChangePass from './components/ChangePass';
 import AdminAddProduct from './components/AdminAddProduct';
+import Layout from "./pages/Layout";
 
 
 function App() {
@@ -30,23 +31,27 @@ function App() {
     }, []);
     
     return (
-      <div>
         <AuthProvider>
           <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<Index />} />
-              <Route path="/kontakt" element={<Kontakt />} />
-              <Route path="/onama" element={<ONama />} />
-              <Route path="/shop" element={<Shop />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
-              <Route path="/adminusersettings" element={<AdminUserSettings />} />
-              <Route path="/changepass" element={<ChangePass />} />
-              <Route path="/adminaddproduct" element={<AdminAddProduct/>} />
-            </Routes>
+              <Routes>
+
+                  <Route element={<Layout />}>
+
+                      <Route path="/" element={<Index />} />
+                      <Route path="/kontakt" element={<Kontakt />} />
+                      <Route path="/onama" element={<ONama />} />
+                      <Route path="/shop" element={<Shop />} />
+                      <Route path="/login" element={<Login />} />
+                      <Route path="/register" element={<Register />} />
+                      <Route path="/adminusersettings" element={<AdminUserSettings />} />
+                      <Route path="/changepass" element={<ChangePass />} />
+                      <Route path="/adminaddproduct" element={<AdminAddProduct />} />
+
+                  </Route>
+
+              </Routes>
           </BrowserRouter>
         </AuthProvider>
-      </div>
     )
 }
 

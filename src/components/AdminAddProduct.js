@@ -85,9 +85,6 @@ function AdminAddProduct () {
 
     return (
         <div>
-            <header>
-                <Nav />
-            </header>
             <h2 className="product-header">Dodajte novi proizvod</h2>
             <form className="product-add-form" onSubmit={handleSubmit}>
                 <label>Brand</label>

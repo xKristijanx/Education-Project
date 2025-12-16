@@ -64,7 +64,6 @@ function Register () {
 
     return (
         <div>
-            <header><Nav /></header>
             <div className="login-form">
                 <h2>Registracija</h2>
             <form onSubmit={handleSubmit}>

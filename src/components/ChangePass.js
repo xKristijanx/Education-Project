@@ -55,9 +55,6 @@ function ChangePass () {
 
     return (
         <div>
-            <header>
-                <Nav />
-            </header>
             <form className="pass-change" onSubmit={handleSubmit}>
                 <label>Stara lozinka</label>
                 <input type="password" required value={oldPassword} onChange={(e) => setOldPassword(e.target.value)}></input>
@@ -71,7 +68,6 @@ function ChangePass () {
                 <button type="submit" className="pass-change-btn">Promjenite lozinku</button>
             </form>
         </div>
-        
     )
 }
 

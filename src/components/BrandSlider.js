@@ -12,6 +12,27 @@ function BrandSlider () {
 
     const [ index, setIndex ] = useState(0);
     const [ products, setProducts ] = useState([]);
+    const [ currentPage, setCurrentPage ] = useState(1);
+
+
+    const itemsPerPage = 6;
+
+    const totalItems = products.length;
+    const totalPages = Math.ceil(totalItems / itemsPerPage);
+
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+
+    const goPrev = () => {
+        setCurrentPage(p => Math.max(1, p - 1));
+    };
+
+    const goNext = () => {
+        setCurrentPage(p => Math.min(totalPages, p + 1));
+    };
+
+    const currentProducts = products.slice(startIndex, endIndex);
+
 
     const brands = [
         {name: "Toshiba", logo: Toshiba },
@@ -22,6 +43,10 @@ function BrandSlider () {
     ]
 
     const selectedBrand = brands[index]?.name
+
+    useEffect (() => {
+        setCurrentPage(1);
+    }, [selectedBrand]);
 
     useEffect (() => {
         async function fetchProductsByBrand () {
@@ -42,7 +67,7 @@ function BrandSlider () {
                 console.error(`Doslo je do greske kod dohvacanja produkata: ${error}`)
             }
         }
-        fetchProductsByBrand();
+       if (selectedBrand) fetchProductsByBrand();
     }, [selectedBrand]);
     
 
@@ -82,7 +107,7 @@ function BrandSlider () {
                     ) : (
                         <div className="shop-wrapper">
                             <ul className="shop-items">
-                                {products.map(product => (
+                                {currentProducts.map(product => (
                                     <li className="shop-item" key={product.id}>
                                         <div className="shop-item-img">
                                             <img
@@ -110,6 +135,11 @@ function BrandSlider () {
                         </div>
                     )}
             </div>
+                <div className="pagination-products">
+                        <button type="button" onClick={() => setCurrentPage(p => Math.max(1, p - 1))} disabled={currentPage === 1}>{"<"} Previous</button>
+                            <span>{currentPage} / {totalPages}</span>
+                        <button type="button" onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))} disabled={currentPage === totalPages}>Next {">"}</button>
+                </div>
         </div>
     )
 }

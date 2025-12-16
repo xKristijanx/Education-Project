@@ -2,6 +2,19 @@ import { Link } from "react-router-dom";
 import Nav from "../components/Nav";
 import Footer from "../components/Footer";
 import { useEffect, useRef } from "react";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import L from "leaflet";
+import "leaflet/dist/leaflet.css";
+import markerIcon2x from "leaflet/dist/images/marker-icon-2x.png";
+import markerIcon from "leaflet/dist/images/marker-icon.png";
+import markerShadow from "leaflet/dist/images/marker-shadow.png";
+
+delete L.Icon.Default.prototype._getIconUrl;
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl: markerIcon2x,
+  iconUrl: markerIcon,
+  shadowUrl: markerShadow,
+});
 
 function ONama () {
 
@@ -29,7 +42,6 @@ function ONama () {
 
     return (
         <div className="page">
-            <header><Nav /></header>
             <main>
                 <div className="o-nama-cont">
                     <h1 className="o-nama-header">O nama</h1>
@@ -51,8 +63,26 @@ function ONama () {
                         </p>
                     </div>
                 </div>
+                   <div className="map-wrapper">
+                        <MapContainer
+                            className="leaflet-map"
+                            center={[46.3057, 16.3366]}   // Varaždin primjer
+                            zoom={13}
+                            scrollWheelZoom={false}
+                        >
+                        <TileLayer
+                            attribution='&copy; OpenStreetMap contributors'
+                            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                        />
+
+                        <Marker position={[46.3057, 16.3366]}>
+                        <Popup>
+                                LV Servis<br />Montaža i servis klima uređaja
+                        </Popup>
+                        </Marker>
+                        </MapContainer>
+                    </div>
             </main>
-            <Footer />
         </div>
     ); 
 } 

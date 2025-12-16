@@ -5,9 +5,7 @@ import BrandSlider from "../components/BrandSlider";
 function Shop () {
     return (
         <div>
-            <header><Nav /></header>
             <BrandSlider />
-            <Footer />
         </div>
     )
 }

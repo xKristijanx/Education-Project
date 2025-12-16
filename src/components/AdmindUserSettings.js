@@ -13,11 +13,41 @@ function AdminUserSettings () {
 
     const [ showtable, setShowTable ] = useState(false);
     const [ products, setProducts ] = useState([]);
+    const [ currentPage, setCurrentPage ] = useState(1);
+    const [ itemsPerPage, setItemsPerPage ] = useState(8);
+    const [ searchTerm, setSearchTerm ] = useState("");
+    const [ editOpen, setEditOpen ] = useState(false);
+    const [ editProduct, setEditProduct ] = useState(null); 
 
     const { user, role } = useAuth();
 
     const profilePicRef = useRef(null);
     const [profilePic, setProfilePic] = useState(Placeholder);
+
+    const[ selectedBrand, setSelectedBrand ] = useState ("all");
+    const brandList = ["all", ...new Set(products.map(p => p.brand).filter(Boolean))];
+    const filteredProducts = selectedBrand === "all" ? products : products.filter(p => p.brand === selectedBrand);
+
+    const normalized = searchTerm.trim().toLowerCase();
+
+    const searchedProducts = !normalized ? filteredProducts : filteredProducts.filter(p => {
+        const brand = (p.brand ?? "").toLowerCase();
+        const ime = (p.ime ?? "").toLowerCase();
+        const model = (p.model ?? "").toLowerCase();
+
+        return (
+            brand.includes(normalized) || ime.includes(normalized) || model.includes(normalized)
+        );
+    });
+
+    const totalPages = Math.max(1, Math.ceil(searchedProducts.length / itemsPerPage))
+
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const pagedProducts = searchedProducts.slice(startIndex, startIndex + itemsPerPage);
+
+    useEffect (() => {
+        setCurrentPage(1);
+    }, [selectedBrand, itemsPerPage, searchTerm]);
 
     useEffect (() => {
         if (user?.photoURL) {
@@ -87,8 +117,7 @@ function AdminUserSettings () {
         try {
             await deleteDoc(doc(db, "products", productId));
 
-            setProducts([]);
-            fetchProducts();
+            setProducts(prev => prev.filter(p => p.id !== productId));
         }
 
         catch(error) {
@@ -96,11 +125,32 @@ function AdminUserSettings () {
         }
     }
 
+    async function handleSaveEdit () {
+        if (!editProduct?.id) return;
+
+        try {
+            await updateDoc(doc(db, "products", editProduct.id), {
+                brand: editProduct.brand ?? "",
+                ime: editProduct.ime ?? "",
+                model: editProduct.model ?? "",
+                snaga_kW: editProduct.snaga_kW === "" ? "" : Number(editProduct.snaga_kW),
+                tip: editProduct.tip ?? "",
+                cijena: editProduct.cijena === "" ? "" : Number(editProduct.cijena)
+            })
+
+            setProducts(prev => prev.map(p => (p.id === editProduct.id ? { ...p, ...editProduct } : p))
+            );
+            
+            setEditOpen(false);
+            setEditProduct(null);
+        }
+        catch (error) {
+            console.error(`Greska kod spremanja: ${error}`)
+        }
+    }
+
     return (
         <div>
-            <header>
-             <Nav />
-             </header>
              <div className="ad-us-box">
                 <div className="ad-us-box-wrap">
                     <img src={profilePic} className="user-profile-img" alt="Profilna slika"></img>
@@ -122,32 +172,80 @@ function AdminUserSettings () {
                     </>
                 )}
             </div>
-            <div className={`table-win ${showtable ? "" : "hide-table"}`}>
-                <table className={`product-table`}>
-                    <thead>
-                        <tr>
-                            <td>Brand</td>
-                            <td>Ime</td>
-                            <td>Model</td>
-                            <td>Snaga (kW)</td>
-                            <td>Tip</td>
-                            <td>Cijena</td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {products.map(product => (
-                            <tr key={product.id}>
-                                <td>{product.brand}</td>
-                                <td>{product.ime}</td>
-                                <td>{product.model}</td>
-                                <td>{product.snaga_kW}</td>
-                                <td>{product.tip}</td>
-                                <td>{product.cijena} €</td>
-                                <td><button onClick={() => handleDelete(product.id)}>Ukloni</button></td>
+
+           <div className={`table-wrapper ${showtable ? "open" : ""}`}>
+                {/* search by name, brand or model */}
+                <div className="brand-btn-filter">
+                        {brandList.map((brand) => (
+                            <button key={brand} type="button" onClick= {() => setSelectedBrand(brand)} className={selectedBrand === brand ? "active" : ""}>{brand}</button>
+                        )
+                        )}
+                </div>
+
+                <div className="search-par">
+                    <input className="searched-products" type="text" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} placeholder="Pretrazite(brand/model/ime)..." />
+                    {searchTerm && (<button className="search-par-btn" type="button" onClick={() => setSearchTerm("")}>Clear</button>)}
+                </div>
+
+                <div className="table-win">
+                    <table className={`product-table`}>
+                        <thead>
+                            <tr>
+                                <th>Brand</th>
+                                <th>Ime</th>
+                                <th>Model</th>
+                                <th>Snaga (kW)</th>
+                                <th>Tip</th>
+                                <th>Cijena</th>
+                                <th></th>
+                                <th></th>
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            {pagedProducts.map(product => (
+                                <tr key={product.id}>
+                                    <td>{product.brand}</td>
+                                    <td>{product.ime}</td>
+                                    <td>{product.model}</td>
+                                    <td>{product.snaga_kW}</td>
+                                    <td>{product.tip}</td>
+                                    <td>{product.cijena} €</td>
+                                    <td><button className="paged-prod-btn1" onClick={() => handleDelete(product.id)}>Ukloni</button></td>
+                                    <td><button className="paged-prod-btn2" onClick={() => { setEditProduct(product); setEditOpen(true); }}>Uredi</button></td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+                <div className="pagination-products">
+                    <button type="button" onClick={() => setCurrentPage(p => Math.max(1, p - 1))} disabled={currentPage === 1}>{"<"} Previous</button>
+                        <span>{currentPage} / {totalPages}</span>
+                    <button type="button" onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))} disabled={currentPage === totalPages}>Next {">"}</button>
+                </div>
+            </div>
+
+            <div className="modal-block">
+                 {editOpen && editProduct && (
+                    <div className="modal-backdrop" onClick={() => {setEditOpen(false); setEditProduct(null);}}>
+                        <div className="modal" onClick={(e) => e.stopPropagation()}>
+                            <h3>Uredi proizvod</h3>
+                            <label>Brand</label>
+                            <input type="text" placeholder="Brand" value={editProduct.brand ?? ""} onChange={(e) => { setEditProduct(prev => ({...prev, brand: e.target.value}))}} />
+                            <label>Ime</label>
+                            <input type="text" placeholder="Ime" value={editProduct.ime ?? ""} onChange={(e) => setEditProduct(p => ({ ...p, ime: e.target.value }))} />
+                            <label>Model</label>
+                            <input type="text" placeholder="Model" value={editProduct.model ?? ""} onChange={(e) => setEditProduct(p => ({ ...p, model: e.target.value }))} />
+                            <label>Snaga (kW)</label>
+                            <input type="number" placeholder="kW" value={editProduct.snaga_kW ?? ""} onChange={(e) => setEditProduct(p => ({ ...p, snaga_kW: e.target.value }))} />
+                            <label>Tip</label>
+                            <input type="text" placeholder="Tip" value={editProduct.tip ?? ""} onChange={(e) => setEditProduct(p => ({ ...p, tip: e.target.value }))} />
+                            <label>Cijena (€)</label>
+                            <input type="number" placeholder="€" value={editProduct.cijena ?? ""} onChange={(e) => setEditProduct(p => ({ ...p, cijena: e.target.value }))} />
+                            <button className="modal-btn1" type="button" onClick={handleSaveEdit}>Spremi</button>
+                            <button className="modal-btn2" type="button" onClick={() => {setEditOpen(false); setEditProduct(null);}}>Zatvori</button>
+                        </div>
+                    </div>
+                 )}
             </div>
         </div>
     )

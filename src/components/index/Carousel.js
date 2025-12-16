@@ -6,7 +6,7 @@ import { collection, getDocs } from "firebase/firestore";
 function Carousel () {
 
     const scrollRef = useRef(null);
-    const [visibleItems, setVisibleItems] = useState (4);
+    const [ visibleItems, setVisibleItems ] = useState (4);
     const [ products, setProducts ] = useState([]);
 
     function getRandomItems(array, count) {
@@ -58,45 +58,27 @@ function Carousel () {
 
             handleResize();
             window.addEventListener("resize", handleResize);
+            return () => window.removeEventListener("resize", handleResize);
     },[]);  
 
-        const ScrollLeft = () => {
-        if (!scrollRef.current) return;
+    const scrollOneSlot = (direction) => {
+        const el = scrollRef.current;
+        if (!el) return;
 
-        const firstItem = scrollRef.current.querySelector(".carousel-item");
+        const firstItem = el.querySelector(".carousel-item");
         if (!firstItem) return;
 
-        const itemRect = firstItem.getBoundingClientRect();
-        const styles = window.getComputedStyle(firstItem);
-        const marginLeft = parseFloat(styles.marginLeft) || 0;
-        const marginRight = parseFloat(styles.marginRight) || 0;
+        const itemWidth = firstItem.getBoundingClientRect().width;
 
-        const itemWidth = itemRect.width + marginLeft + marginRight;
+        const gap = parseFloat(getComputedStyle(el).columnGap || getComputedStyle(el).gap) || 0;
 
-        scrollRef.current.scrollBy({
-        left: -itemWidth,
-        behavior: "smooth",
-        });
+        const step = itemWidth + gap;
+
+        el.scrollBy({ left: direction * step, behavior: "smooth" });
     };
 
-    const ScrollRight = () => {
-        if (!scrollRef.current) return;
-
-        const firstItem = scrollRef.current.querySelector(".carousel-item");
-        if (!firstItem) return;
-
-        const itemRect = firstItem.getBoundingClientRect();
-        const styles = window.getComputedStyle(firstItem);
-        const marginLeft = parseFloat(styles.marginLeft) || 0;
-        const marginRight = parseFloat(styles.marginRight) || 0;
-
-        const itemWidth = itemRect.width + marginLeft + marginRight;
-
-        scrollRef.current.scrollBy({
-        left: itemWidth,
-        behavior: "smooth",
-        });
-    };
+    const ScrollLeft = () => scrollOneSlot(-1);
+    const ScrollRight = () => scrollOneSlot(1);
 
     function formatPrice(value) {
         if (!value && value !==0 ) return "";
@@ -116,14 +98,14 @@ function Carousel () {
                 <h2 className="marketing-sell">Pronađite idealnu klimu za vaš dom ili ured — brzo i jednostavno!</h2>
                 <div className="carousel-arrows">
                 <button className="carousel-arrow arrow-margin-right" onClick={ScrollLeft}>&#10094;</button> 
-                <div className="carousel-window">
+                <div className="carousel-window" style={{ "--items": visibleItems }}>
                     <div className="carousel-scroll" ref={scrollRef}>
                         {products.map(product => (
                             <article className="carousel-item" key={product.id}>
                                 <img className="carousel-img" src={product.slika || product.imageUrl || Placeholder} alt={`${product.brand || ""} ${product.model || ""}`} />
                                 <p className="carousel-info product-name">{product.ime}</p>
-                                <p className="carousel-info">Model: {product.brand}</p>
-                                <p className="carousel-info">Brand: {product.model}</p>
+                                <p className="carousel-info">Brand: {product.brand}</p>
+                                <p className="carousel-info">Model: {product.model}</p>
                                 <p className="carousel-info">Snaga: {product.snaga_kW} kW</p>
                                 <p className="carousel-info">Cijena: {formatPrice(product.cijena)} €</p>
                             </article>
