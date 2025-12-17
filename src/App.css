@@ -495,8 +495,13 @@ header {
         width: 80%;
     }
 
+    @keyframes scroll {
+        from { transform: translateX(0);}
+        to { transform: translateX(-272%);} 
+    }
+
     .scroll-container {
-        animation: scroll 15s linear infinite;
+        animation: scroll 40s linear infinite;
     }
 
     .window-scroller {
@@ -505,7 +510,6 @@ header {
 
     .review {
         flex-basis: 33%;
-        margin-right: 1%;
     }
 
     .logo-brands {
@@ -530,8 +534,14 @@ header {
 }
 
 @media (max-width: 1100px){
+
+    @keyframes scroll {
+        from { transform: translateX(0);}
+        to { transform: translateX(-400%);} 
+    }
+    
     .scroll-container {
-        animation: scroll 10s linear infinite;
+        animation: scroll 40s linear infinite;
     }
 
     .review {
@@ -658,6 +668,10 @@ header {
 /* Tablet Portrait → Mobile */
 @media (max-width: 768px) {
 
+    .header-text {
+        font-size: 18px;
+    }
+
     .carousel-button {
         width: 60%;
     }
@@ -684,8 +698,13 @@ header {
         font-size: 23px;
     }
 
+    @keyframes scroll {
+        from { transform: translateX(0);}
+        to { transform: translateX(-800%);} 
+    }
+
     .scroll-container {
-        animation: scroll 8s linear infinite;
+        animation: scroll 40s linear infinite;
     }
 
     .review {
@@ -698,8 +717,12 @@ header {
     
     .carousel-scroll {
         --items: 1;
-        margin: 100px;
+        margin: 0px;
       }
+
+    .carousel-arrows {
+        gap: 10px;               
+  }
 }
 
 @media (max-width: 710px) {
@@ -917,22 +940,28 @@ textarea {
 .onm-ovr {
     overflow: hidden;
     width: 100%;
-    height: 0px;
+    max-height: 0;
     border: 1px solid #00000025;
     border-radius: 20px;
     background-color: white;
-    transition: height 2s ease;
+    transition: max-height 5s ease, opacity 0.4s ease;
 }
 
 .onm-ovr.active {
-    height: 100px;
-    max-height: 1000px;
+    max-height: 300px;
 }
 
 .o-nama-para {
     padding: 30px;
     margin-bottom: 20px;
     text-align: center;
+    opacity: 0;
+    transition: opacity 2s ease;
+    transition-delay: 1s;
+}
+
+.onm-ovr.active .o-nama-para {
+    opacity: 1;
 }
 
 .map-wrapper {
@@ -948,6 +977,19 @@ textarea {
 .leaflet-map {
     height: 500px;
     width: 100%;
+}
+
+
+@media (max-width: 768px) {
+  .onm-ovr.active {
+    max-height: 200px;
+    overflow-y: auto;
+  }
+
+  .o-nama-para {
+    padding: 20px;
+    font-size: 0.95rem;
+  }
 }
 
 /*Login / Register*/
@@ -1071,6 +1113,7 @@ textarea {
 
 .ad-us-box-wrap {
     display: flex;
+    flex-wrap: wrap;
     gap: 20px;
 }
 
@@ -1085,7 +1128,7 @@ textarea {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    gap: 16%;
+    gap: 20px;
     margin-left: 20px;
 }
 
@@ -1096,7 +1139,7 @@ textarea {
 
 .admin-split {
     width: 100%;
-    margin-top: 3%;
+    margin-top: 5%;
     border: none;
     border-top: 1px solid #ccc;
 }
@@ -1117,6 +1160,7 @@ textarea {
 .brand-btn-filter {
     display: flex;
     justify-content: flex-start;
+    flex-wrap: nowrap;
     gap: 5%;
     width: 80%;
     margin: auto;
@@ -1124,6 +1168,16 @@ textarea {
     border-radius: 20px;
     background-color: #f8f8f8;
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.brand-btn-filter::-webkit-scrollbar {
+    height: 6px;
+}
+.brand-btn-filter::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 10px;
 }
 
 .brand-btn-filter button {
@@ -1199,10 +1253,12 @@ textarea {
     border: 1px solid #00000025;
     box-shadow: 0 0 5px #ccc;
     width: 80%;
-    padding: 2% 0px;
+    padding: 2%;
     margin: 30px auto;
     border-radius: 20px;
     height: auto;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
 .table-wrapper {
@@ -1221,7 +1277,8 @@ textarea {
 
 .product-table {
     margin: auto;
-    width: 95%;
+    width: 100%;
+    min-width: 900px;
     border-radius: 20px;
     height: auto;
     border-collapse: collapse;
@@ -1343,7 +1400,7 @@ textarea {
 .modal-backdrop{
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,0.45);
+    background: rgba(0, 0 ,0 , 0.45);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1414,6 +1471,33 @@ textarea {
     box-shadow: 0 0 10px #ff6b6b;
     transform: translateY(-6px);
 } 
+
+@media (max-width: 900px)
+{
+
+    .product-table th, .product-table td {
+        padding: 10px 8px;
+        font-size: 0.85rem;
+        white-space: nowrap;
+    }
+
+    .brand-btn-filter, .search-par, .table-win, .pagination-products {
+        width: 95%;
+    }
+}
+
+@media (max-width: 552px) {
+    .ad-us-box {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .ad-us-box-wrap {
+        justify-content: center;
+    }
+}
 
 /* Pass-change css */
 
@@ -1635,181 +1719,232 @@ textarea {
 }
 
 .brand-logo-item {
-  flex: 1;                     
-  display: flex;
-  justify-content: center;     
+    flex: 1;                     
+    display: flex;
+    justify-content: center;     
 }
 
 .brand-logo-item img {
-  max-height: 45px;
-  width: auto;
-  object-fit: contain;
-  filter: grayscale(40%);
-  border: 1px solid #00000025;
-  border-radius: 10px;
-  padding: 4px 8px;
-  background-color: #fafafa;
+    max-height: 45px;
+    width: auto;
+    object-fit: contain;
+    filter: grayscale(40%);
+    border: 1px solid #00000025;
+    border-radius: 10px;
+    padding: 4px 8px;
+    background-color: #fafafa;
 }
 
 
 .brand-slider-input {
-  width: calc(100% - 40px); 
-  margin: 10px auto 5px;
-  display: block;
-  appearance: none;
-  height: 8px;
-  border-radius: 999px;
-  background: linear-gradient(90deg, #667eea, #764ba2);
-  outline: none;
+    width: calc(100% - 40px); 
+    margin: 30px auto 5px;
+    display: block;
+    appearance: none;
+    height: 8px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #667eea, #764ba2);
+    outline: none;
+}
+
+.slider-hint {
+    text-align: center;
+    font-size: 1rem;
+    color: #666;
+    margin-top: 20px;
+    opacity: 0.85;
 }
 
 /* Chrome ball css*/
 
 .brand-slider-input::-webkit-slider-thumb {
-  appearance: none;
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  background: #764ba2;
-  border: 2px solid #764ba2;
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.25);
-  cursor: pointer;
-  transition: transform 0.15s ease;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #ffffff;
+    border: 2px solid #764ba2;
+    box-shadow: 0 0 0 4px rgba(118, 75, 162, 0.15), 0 2px 6px rgba(0, 0, 0, 0.25);
+    cursor: pointer;
+    transition: transform 0.15s ease;
 }
 
 .brand-slider-input::-webkit-slider-thumb:hover {
-  transform: scale(1.08);
+    transform: scale(1.08);
 }
 
 /* Firefox ball css */
 
 .brand-slider-input::-moz-range-thumb {
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  background: #764ba2;
-  border: 2px solid #764ba2;
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.25);
-  cursor: pointer;
-  transition: transform 0.15s ease;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #ffffff;
+    border: 2px solid #764ba2;
+    box-shadow: 0 0 0 4px rgba(118, 75, 162, 0.15), 0 2px 6px rgba(0, 0, 0, 0.25);
+    cursor: pointer;
+    transition: transform 0.15s ease;
 }
 
 .brand-slider-input::-moz-range-thumb:hover {
-  transform: scale(1.08);
+    transform: scale(1.08);
 }
 
 .brand-slider-input::-moz-range-track {
-  height: 4px;
-  border-radius: 999px;
-  background: linear-gradient(90deg, #667eea, #764ba2);
+    height: 4px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #667eea, #764ba2);
 }
 
 .shop-block {
-  width: 80%;
-  max-width: 1100px;
-  margin: 40px auto 100px;
-  padding: 20px 20px 30px;
-  border: 1px solid #00000025;
-  border-radius: 20px;
-  background-color: #ffffff;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+    width: 80%;
+    max-width: 1100px;
+    margin: 40px auto 100px;
+    padding: 20px 20px 30px;
+    border: 1px solid #00000025;
+    border-radius: 20px;
+    background-color: #ffffff;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
 }
 
 .shop-empty {
-  text-align: center;
-  padding: 20px 0;
-  color: #777;
-  font-size: 0.95rem;
+    text-align: center;
+    padding: 20px 0;
+    color: #777;
+    font-size: 0.95rem;
 }
 
 .shop-wrapper {
-  width: 100%;
-  padding: 10px 10px 20px;
+    width: 100%;
+    padding: 10px 10px 20px;
 }
 
 .shop-items {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 20px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
 }
 
 .shop-item {
-  background: #ffffff;
-  border-radius: 16px;
-  padding: 14px 16px;
-  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.06);
-  border: 1px solid #00000010;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 14px 16px;
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.06);
+    border: 1px solid #00000010;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .shop-item:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 26px rgba(0, 0, 0, 0.1);
 }
 
 .shop-item-img {
-  width: 100%;
-  height: 160px;
-  border-radius: 12px;
-  background: #f7f7f9;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
+    width: 100%;
+    height: 160px;
+    border-radius: 12px;
+    background: #f7f7f9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
 }
 
 .shop-item-img img {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
 }
 
 
 .shop-item-info {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
 }
 
 .shop-item-title {
-  font-size: 1.05rem;
-  font-weight: 600;
+    font-size: 1.05rem;
+    font-weight: 600;
 }
 
 .shop-item-sub {
-  font-size: 0.9rem;
-  color: #666;
+    font-size: 0.9rem;
+    color: #666;
 }
 
 .shop-item-power {
-  font-size: 0.9rem;
-  color: #555;
+    font-size: 0.9rem;
+    color: #555;
 }
 
 .shop-item-price {
-  margin-top: 6px;
-  font-size: 1.05rem;
-  font-weight: 700;
-  color: #2c7a7b;
+    margin-top: 6px;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #2c7a7b;
 }
 
 /* Shop media */
 @media (max-width: 768px) {
-  .brand-slider,
-  .shop-block {
-    width: 90%;
-    padding: 20px;
-  }
+    .brand-slider,
+    .shop-block {
+        width: 90%;
+        padding: 20px;
+    }
 
-  .shop-item-img {
-    height: 140px;
-  }
+    .shop-item-img {
+        height: 140px;
+    }
+}
+
+@media (max-width: 700px) {
+    .brand-slider {
+        width: auto;
+        margin: 0 70px;
+    }
+
+    .slider-fl {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .brand-slider-logos {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .slider-wrap {            
+       position: relative;
+       height: 350px;  
+       width: 60px;
+       margin: 0 20px;
+     }
+
+    .brand-slider-input {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform-origin: top left;
+        transform: translateX(0%) rotate(90deg);
+        width: 300px;
+
+    }  
+}
+
+@media (max-width:470px) {
+    .brand-slider {
+        width: 85%;
+        margin: auto;
+    }
 }
 
 
@@ -1818,7 +1953,9 @@ textarea {
 footer {
     display: flex;
     justify-content: space-evenly;
-    height: 200px;
+    flex-wrap: wrap;
+    height: auto;
+    padding: 20px;
     border-top: 1px solid #d3d3d3;
     color: white;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -1832,6 +1969,15 @@ footer {
 .footer-socials a {
     color: white;
     text-decoration: none;
+}
+
+.footer-contact, .footer-socials, .footer-legal {
+  flex: 0 1 250px;
+}
+
+.footer-contact p {
+    line-height: 1.6;
+    word-break: break-word;
 }
 
 .footer-margin {

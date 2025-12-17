@@ -18,7 +18,7 @@ function LogoBrands () {
     ]
 
     const [ angle, setAngle ] = useState(0);
-    const [ radius, setRadius ] = useState(180);
+    const [ radius, setRadius ] = useState(150);
 
     useEffect(() => {
         let frame;
@@ -35,11 +35,11 @@ function LogoBrands () {
 
     useEffect (() => {
         function updateRadius() {
-            if (window.innerWidth < 700) {
-                setRadius(140);
+            if (window.innerWidth < 500) {
+                setRadius(120);
             }
-            else if ( window.innerWidth < 500) {
-                setRadius(100);
+            else if ( window.innerWidth < 700) {
+                setRadius(140);
             }
             else {
                 setRadius(180);

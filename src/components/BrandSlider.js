@@ -76,26 +76,30 @@ function BrandSlider () {
             <section className="brand-slider">
                 <h2>ODABERITE BREND</h2>
 
-                <div className="brand-slider-logos">
-                    <div className="brand-logo-item">
-                        <img src={Toshiba} alt="Toshiba" />
+                <div className="slider-fl">
+                    <div className="brand-slider-logos">
+                        <div className="brand-logo-item">
+                            <img src={Toshiba} alt="Toshiba" />
+                        </div>
+                        <div className="brand-logo-item">
+                            <img src={Midea} alt="Midea" />
+                        </div>
+                        <div className="brand-logo-item">
+                            <img src={Korel} alt="Korel" />
+                        </div>
+                        <div className="brand-logo-item">
+                            <img src={QTherm} alt="QTherm" />
+                        </div>
+                        <div className="brand-logo-item">
+                            <img src={Fujitsu} alt="Fujitsu" />
+                        </div>
                     </div>
-                    <div className="brand-logo-item">
-                        <img src={Midea} alt="Midea" />
-                    </div>
-                    <div className="brand-logo-item">
-                        <img src={Korel} alt="Korel" />
-                    </div>
-                    <div className="brand-logo-item">
-                        <img src={QTherm} alt="QTherm" />
-                    </div>
-                    <div className="brand-logo-item">
-                        <img src={Fujitsu} alt="Fujitsu" />
-                    </div>
-                </div>
 
-                <div>
-                    <input type="range" className="brand-slider-input" min="0" max="4" step="1" value={index} onChange={(e) => setIndex(Number(e.target.value))}/>
+                    <div className="slider-wrap">
+                        <input type="range" className="brand-slider-input" min="0" max="4" step="1" value={index} onChange={(e) => setIndex(Number(e.target.value))}/>
+                    </div>
+
+                    <p className="slider-hint">Povucite klizač za odabir brenda</p>
                 </div>
             {/* <div className="brand-slider-output">
                     <h3>Odabrani brand index: {brands[index].name}</h3>
