@@ -18,6 +18,7 @@ function AdminAddProduct () {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
+    const [previewUrl, setPreviewUrl] = useState("");
 
     async function handleSubmit (e) {
         e.preventDefault();
@@ -120,7 +121,24 @@ function AdminAddProduct () {
                 <input className="product-field" name="cijena" value={cijena} type="number" onChange={(e) => setCijena(e.target.value)} placeholder="*" required />
 
                 <label>Slika</label>
-                <input className="product-field" type="file" accept="image/*" onChange={(e) => setSlika(e.target.files[0])} required />
+                <div className="file-upload">
+                    {previewUrl && (
+                        <div className="img-preview">
+                            <img src={previewUrl} alt="Odabrana slika" />
+                        </div>
+                    )}
+                    <label className="product-btn-img">
+                        Odaberi Sliku
+                        <input type="file" accept="image/*" onChange={(e) => {
+                            const file = e.target.files?.[0];
+                            if (!file) return;
+
+                            setSlika(file);
+                            setPreviewUrl(URL.createObjectURL(file));
+                        }} 
+                        required hidden />
+                    </label>
+                </div>
 
                 <label>Opis</label>
                 <input className="product-field" name="opis" value={opis} onChange={(e) => setOpis(e.target.value)} />

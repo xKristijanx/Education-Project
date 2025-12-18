@@ -1633,6 +1633,45 @@ textarea {
     -moz-appearance: textfield;
 }
 
+.file-upload {
+    width: 80%;          
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.img-preview{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.img-preview img{
+    width: 100%;
+    max-width: 320px;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-radius: 14px;
+    border: 1px solid #00000025;
+    padding: 6px;
+}
+
+.product-btn-img {
+    display: block;
+    text-align: center;
+    width: 40%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 8px 10px;
+    color: white;
+    font-weight: 600;
+    border: 1px solid #666;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.1s ease;
+}
+
 .product-btn {
     display: block;
     text-align: center;
@@ -1648,13 +1687,21 @@ textarea {
     transition: all 0.1s ease;
 }
 
-.product-btn:active {
+.product-btn:active, .product-btn-img:active {
     transform: scale(0.96);
+}
+
+.product-btn:hover, .product-btn-img:hover {
+    filter: brightness(1.1);
 }
 
 @media (max-width: 1200px) {
     .product-add-form {
         width: 50%;
+    }
+
+    .product-btn-img {
+        width: 40%;
     }
 }
 
@@ -1674,17 +1721,28 @@ textarea {
     .product-btn {
         width: 40%;
     }
+
+    .product-btn-img {
+        width: 50%;
+    }
 }
 
-@media (max-width: 700px) {
+@media (max-width: 540px) {
     .product-btn {
-        width: 50%;
+        width: 60%;
+    }
+
+    .product-btn-img {
+        width: 60%;
     }
 }
 
 @media (max-width: 450px) {
     .product-btn {
         width: 60%;
+    }
+    .product-btn-img {
+        width: 70%;
     }
 }
 
@@ -1721,7 +1779,42 @@ textarea {
 .brand-logo-item {
     flex: 1;                     
     display: flex;
-    justify-content: center;     
+    justify-content: center;    
+    transition: transform 0.4s ease; 
+}
+
+.brand-logo-item:hover {
+    transform: scale(1.2);
+}
+
+.brand-logo-item:active {
+    transform: scale(1.2);
+}
+
+.brand-logo-item.active {
+    animation: itemPulse 3s linear infinite, box-shadow 3s linear infinite;
+}
+
+@keyframes itemPulse {
+    0% {
+        transform: scale(0.9);
+    }
+    
+    25% {
+        transform: scale(1.0);
+    }
+
+    50% {
+        transform: scale(1.1);
+    }
+
+    75% {
+        transform: scale(1.0);
+    }
+    
+    100% {
+        transform: scale(0.9);
+    }
 }
 
 .brand-logo-item img {
@@ -1734,7 +1827,6 @@ textarea {
     padding: 4px 8px;
     background-color: #fafafa;
 }
-
 
 .brand-slider-input {
     width: calc(100% - 40px); 

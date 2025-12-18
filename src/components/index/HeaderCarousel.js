@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react"
+import { useEffect, useRef } from "react"
 import Landing_img1 from "../../images/Landing_img1.png"
 import Landing_img2 from "../../images/Landing_img2.png"
 import Landing_img3 from "../../images/Landing_img3.png"

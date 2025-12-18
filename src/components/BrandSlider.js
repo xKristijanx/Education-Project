@@ -19,6 +19,7 @@ function BrandSlider () {
 
     const totalItems = products.length;
     const totalPages = Math.ceil(totalItems / itemsPerPage);
+    const displayPage = totalPages === 0 ? 0: currentPage;
 
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
@@ -78,19 +79,19 @@ function BrandSlider () {
 
                 <div className="slider-fl">
                     <div className="brand-slider-logos">
-                        <div className="brand-logo-item">
+                        <div className={`brand-logo-item ${index === 0 ? "active" : ""}`} onClick={() => setIndex(0)}>
                             <img src={Toshiba} alt="Toshiba" />
                         </div>
-                        <div className="brand-logo-item">
+                        <div className={`brand-logo-item ${index === 1 ? "active" : ""}`} onClick={() => setIndex(1)}>
                             <img src={Midea} alt="Midea" />
                         </div>
-                        <div className="brand-logo-item">
+                        <div className={`brand-logo-item ${index === 2 ? "active" : ""}`} onClick={() => setIndex(2)}>
                             <img src={Korel} alt="Korel" />
                         </div>
-                        <div className="brand-logo-item">
+                        <div className={`brand-logo-item ${index === 3 ? "active" : ""}`} onClick={() => setIndex(3)}>
                             <img src={QTherm} alt="QTherm" />
                         </div>
-                        <div className="brand-logo-item">
+                        <div className={`brand-logo-item ${index === 4 ? "active" : ""}`} onClick={() => setIndex(4)}>
                             <img src={Fujitsu} alt="Fujitsu" />
                         </div>
                     </div>
@@ -140,9 +141,9 @@ function BrandSlider () {
                     )}
             </div>
                 <div className="pagination-products">
-                        <button type="button" onClick={() => setCurrentPage(p => Math.max(1, p - 1))} disabled={currentPage === 1}>{"<"} Previous</button>
-                            <span>{currentPage} / {totalPages}</span>
-                        <button type="button" onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))} disabled={currentPage === totalPages}>Next {">"}</button>
+                        <button type="button" onClick={() => setCurrentPage(p => Math.max(1, p - 1))} disabled={currentPage === 1 || totalPages === 0}>{"<"} Previous</button>
+                            <span>{displayPage} / {totalPages}</span>
+                        <button type="button" onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))} disabled={currentPage === totalPages || totalPages === 0}>Next {">"}</button>
                 </div>
         </div>
     )

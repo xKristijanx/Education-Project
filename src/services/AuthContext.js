@@ -27,8 +27,10 @@ function AuthProvider({ children }) {
             //if the user is logged in
             setUser(firebaseUser);
 
+            //this runs whenever a user is authenticated so it can fetch their role from firestore
+
             try {
-                const ref = doc(db, "users", firebaseUser.uid);
+                const ref = doc(db, "users", firebaseUser.uid); // doc => create a reference to this document location (points to it)
                 const snap = await getDoc(ref);
 
                 if (snap.exists()) {
